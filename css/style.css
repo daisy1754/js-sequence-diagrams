@@ -35,19 +35,12 @@ a:hover {
   color: #474747;
 }
 
-
 #main h3 {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
   color: #474747;
-}
-
-#sidebar {
-  float: left;
-  width: 350px;
-  margin-left: 20px;
 }
 
 .editor {
@@ -61,8 +54,46 @@ a:hover {
     height: 510px;
 }
 
-.gh-forkme {
-  position: absolute; top: 0; right: 0; border: 0;
+.save-button {
+  margin-top: 10px;
+  margin-right: 50px;
+  padding: 10px;
+  display:block;
+  text-align:center;
+  float: right;
+  font-size: 18px;
+  color: #fff;
+  background-color: #2e79ff;
+  border: none;
+}
+
+.save-button:hover,
+.save-button.hover {
+  background-color: #335af7;
+}
+
+.title-wrapper {
+  padding-bottom: 10px;
+}
+
+.title-input {
+  min-width: 500px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-bottom: solid 1px #dcdcdc;
+  transition: .3s ease;
+  background-color : #fafafa;
+}
+
+input[type="text"]:focus,
+input[type="text"].focus {
+  outline: none;
+  border: none;
+  border-bottom: solid 1px #707070;
 }
 
 .inner {

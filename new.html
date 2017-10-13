@@ -22,7 +22,14 @@
     <div id="main">
 
       <section id="main">
-        <table align="center" class="inner">
+        <table class="inner">
+          <tr>
+            <td colspan="2" >
+              <button class="save-button">Save</button>
+              <div class="title-wrapper">
+                <input type="text" class="title-input" placeholder="Title" />
+              </div>
+            </td>
           <tr>
             <td>
             <div class="editor-wrapper">
@@ -50,12 +57,15 @@ A->>C: I am good thanks!</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="js/webfont.js"></script>
+    <script src="js/storage.js"></script>
     <script src="js/snap.svg-min.js"></script>
     <script src="js/underscore-min.js"></script>
     <script src="js/sequence-diagram-snap-min.js"></script>
 
     <script src="js/svginnerhtml.min.js"></script>
     <script type="text/javascript">
+      var editor;
+      var itemId = getNewItemId();
 
       function setup_editor(div) {
 
@@ -64,7 +74,7 @@ A->>C: I am good thanks!</div>
         var download_link = div.find('.download');
 
         // Setup the editor diagram
-        var editor = ace.edit(editor_div.get(0));
+        editor = ace.edit(editor_div.get(0));
         editor.setTheme("ace/theme/crimson_editor");
         editor.getSession().setMode("ace/mode/asciidoc");
         editor.getSession().on('change', _.debounce(on_change, 100));
@@ -117,8 +127,18 @@ A->>C: I am good thanks!</div>
         }
       }
 
+      function save() {
+        saveDiagram(itemId, editor.getValue());
+        setLastItemId(itemId);
+      }
+
       $(document).ready(function() {
         setup_editor($('#main'));
+
+        var itemId = getNewItemId();
+        $('.save-button').click(function() {
+          save();
+        });
       });
     </script>
 
