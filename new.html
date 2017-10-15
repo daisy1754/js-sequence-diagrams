@@ -4,7 +4,6 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="google-site-verification" content="ozgnqb925nLPkhlk9qBcSvdsrY8xIZyrpnBOoDyY1hE" />
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,8 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/sequence-diagram-min.css" media="screen" />
 
-    <title>js-sequence-diagrams by bramp</title>
-    <link rel="canonical" href="https://bramp.github.io/js-sequence-diagrams/" />
+    <title>Create new diagram</title>
   </head>
 
   <body>
@@ -93,35 +91,15 @@ A->>C: I am good thanks!</div>
 
         on_change();
 
-        function on_change() {
+        function drawDiagram(div, content) {
           try {
-            var diagram = Diagram.parse(editor.getValue());
-
-            editor.getSession().setAnnotations([]);
-
-            // Clear out old diagram
-            diagram_div.html('');
-
             var options = {
               theme: 'simple',
               scale: 1
             };
 
-            // Draw
-            diagram.drawSVG(diagram_div.get(0), options);
-
+            div.drawSVG(content, options);
           } catch(err) {
-            var annotation = {
-              type: "error", // also warning and information
-              column: 0,
-              row: 0,
-              text: err.message
-            };
-            if (err instanceof Diagram.ParseError) {
-              annotation.row    = err.loc.first_line - 1;
-              annotation.column = err.loc.first_column;
-            }
-            editor.getSession().setAnnotations([annotation]);
             throw err;
           }
         }
@@ -133,11 +111,12 @@ A->>C: I am good thanks!</div>
       }
 
       $(document).ready(function() {
-        setup_editor($('#main'));
+        setup_editor($('div#main'));
 
         var itemId = getNewItemId();
         $('.save-button').click(function() {
           save();
+          console.log("Saved item with id: " + itemId);
         });
       });
     </script>

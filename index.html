@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/sequence-diagram-min.css" media="screen" />
+
+    <title>List of diagrams</title>
+  </head>
+
+  <body>
+
+    <div id="main">
+      <section id="main">
+
+
+      </section>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Needed for the text editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="js/webfont.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/snap.svg-min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/sequence-diagram-snap-min.js"></script>
+
+    <script src="js/svginnerhtml.min.js"></script>
+    <script type="text/javascript">
+      var items = getDiagrams();
+
+      function showDiagrams(container) {
+        for (var i = 0; i < items.length; i++) {
+          container.append(`<div id='diagram-${items[i].id}'><div>${items[i].title ? items[i].title : ""} ${items[i].id}</div>`
+            + `<div class='image'></div><div class='image'></div></div>`);
+          var diagram = Diagram.parse(items[i].content);
+          diagram.drawSVG(
+            container.find(`#diagram-${items[i].id} .image`).get(0), {theme: 'simple'});
+        }
+      }
+
+      $(document).ready(function() {
+        showDiagrams($('div#main'));
+      });
+    </script>
+  </body>
+</html>
