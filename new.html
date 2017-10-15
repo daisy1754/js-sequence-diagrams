@@ -91,15 +91,33 @@ A->>C: I am good thanks!</div>
 
         on_change();
 
-        function drawDiagram(div, content) {
+        function on_change(div, content) {
           try {
+            var diagram = Diagram.parse(editor.getValue());
+
+            editor.getSession().setAnnotations([]);
+
+            // Clear out old diagram
+            diagram_div.html('');
+
             var options = {
               theme: 'simple',
               scale: 1
             };
 
-            div.drawSVG(content, options);
+            diagram.drawSVG(diagram_div.get(0), options);
           } catch(err) {
+            var annotation = {
+              type: "error", // also warning and information
+              column: 0,
+              row: 0,
+              text: err.message
+            };
+            if (err instanceof Diagram.ParseError) {
+              annotation.row    = err.loc.first_line - 1;
+              annotation.column = err.loc.first_column;
+            }
+            editor.getSession().setAnnotations([annotation]);
             throw err;
           }
         }
